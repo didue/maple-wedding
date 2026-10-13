@@ -1309,7 +1309,7 @@ body::before {
   height: 100%;
   max-width: 100vw;
   max-height: 100dvh;
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
   display: block;
 }
@@ -2065,6 +2065,10 @@ body::before {
   text-decoration: none;
   text-align: center;
   transition: transform 0.15s ease;
+}
+
+.btn-modal-action:only-child {
+  grid-column: 1 / -1;
 }
 
 .btn-modal-action.copy {

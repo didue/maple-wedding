@@ -25,8 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Backend Google Apps Script Webhook Endpoint
   const GAS_ENDPOINT_URL =
-    'https://script.google.com/macros/s/AKfycbyRpBZMmXNy1Scj5YMFaS2DztLaOVrj5fyL358FblVtIc89pgftdQMJI4RP1xrVQ-n_/exec';
-  const DRIVE_FOLDER_ID = '1jG1ujZpW-I50bLb9ANM70MhKCZy_TcKi';
+    'https://script.google.com/macros/s/AKfycbxXEm5vo1v3y0bXZwkvM7grQ3e2VoShyhmPlwqbYKQcpxsFweC0BKpJYHEeMrCv5aN8eQ/exec';
+  const DRIVE_FOLDER_ID = '1SFKJ1G5HZtnxrUwhXN2D9l_iAAqIqab-';
 
   // 2. Background Music (BGM) Player
   const bgmAudio = document.getElementById('bgm-audio');
@@ -78,8 +78,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 3. Live D-Day & Countdown Timer
   const updateCountdown = () => {
-    // Target: 2027년 04월 04일 11:20:00 KST
-    const weddingDate = new Date('2027-04-04T11:20:00+09:00').getTime();
+    // Target: 2027년 01월 09일 12:40:00 KST
+    const weddingDate = new Date('2027-01-09T12:40:00+09:00').getTime();
     const now = new Date().getTime();
     const diff = weddingDate - now;
 
@@ -534,10 +534,10 @@ document.addEventListener('DOMContentLoaded', () => {
     lightboxSliderTrack.style.scrollBehavior = 'auto';
 
     const slideWidth = window.innerWidth;
-    lightboxSliderTrack.scrollLeft = (6 + realIndex) * slideWidth;
+    lightboxSliderTrack.scrollLeft = (totalGalleryItems + realIndex) * slideWidth;
 
     requestAnimationFrame(() => {
-      lightboxSliderTrack.scrollLeft = (6 + realIndex) * (lightboxSliderTrack.offsetWidth || window.innerWidth);
+      lightboxSliderTrack.scrollLeft = (totalGalleryItems + realIndex) * (lightboxSliderTrack.offsetWidth || window.innerWidth);
       void lightboxSliderTrack.offsetHeight;
       requestAnimationFrame(() => {
         lightboxSliderTrack.style.scrollSnapType = 'x mandatory';
@@ -568,9 +568,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let lbScrollEndTimer = null;
 
     const checkLightboxLoop = () => {
-      if (isLightboxResetting || lightboxSlides.length < 12) return;
+      if (isLightboxResetting || lightboxSlides.length < totalGalleryItems * 2) return;
       const sWidth = lightboxSliderTrack.offsetWidth || window.innerWidth;
-      const fullSetW = 6 * sWidth;
+      const fullSetW = totalGalleryItems * sWidth;
       if (fullSetW <= 0) return;
 
       let deltaScroll = 0;
@@ -873,8 +873,8 @@ document.addEventListener('DOMContentLoaded', () => {
       if (navigator.share) {
         navigator
           .share({
-            title: '박철용 & 심다은 결혼합니다',
-            text: '2027년 4월 4일 일요일 오전 11:20 더 파티움 여의도',
+            title: '배정근 & 한지수 결혼합니다',
+            text: '2027년 1월 9일 토요일 오후 12:40 더 파티움 여의도',
             url: window.location.href,
           })
           .catch(() => {});
