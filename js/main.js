@@ -34,6 +34,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const bgmIconMute = document.getElementById('bgm-icon-mute');
   const bgmIconPlay = document.getElementById('bgm-icon-play');
 
+  // 효과음 on/off 상태 (BGM 토글과 동기화)
+  let sfxMuted = false;
+
   if (bgmAudio && bgmToggleBtn) {
     let isPlaying = false;
 
@@ -42,9 +45,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isPlaying) {
           bgmAudio.pause();
           isPlaying = false;
+          sfxMuted = true;
           if (bgmIconMute) bgmIconMute.style.display = 'block';
           if (bgmIconPlay) bgmIconPlay.style.display = 'none';
         } else {
+          sfxMuted = false;
           await bgmAudio.play();
           isPlaying = true;
           if (bgmIconMute) bgmIconMute.style.display = 'none';
@@ -144,6 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
   questAudio.preload = 'auto';
 
   const playQuestSound = () => {
+    if (sfxMuted) return;
     try {
       questAudio.currentTime = 0;
       const playPromise = questAudio.play();
@@ -162,6 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
   portalAudio.preload = 'auto';
 
   const playPortalSound = () => {
+    if (sfxMuted) return;
     try {
       portalAudio.currentTime = 0;
       const playPromise = portalAudio.play();
@@ -176,6 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
   closeAudio.preload = 'auto';
 
   const playCloseSound = () => {
+    if (sfxMuted) return;
     try {
       closeAudio.currentTime = 0;
       const playPromise = closeAudio.play();
@@ -190,6 +198,7 @@ document.addEventListener('DOMContentLoaded', () => {
   openAudio.preload = 'auto';
 
   const playOpenSound = () => {
+    if (sfxMuted) return;
     try {
       openAudio.currentTime = 0;
       const playPromise = openAudio.play();
@@ -648,8 +657,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const renderMap = () => {
       if (typeof naver !== 'undefined' && naver.maps) {
         try {
-          // 더 파티움 여의도 (위도 37.5284, 경도 126.9205)
-          const venueLocation = new naver.maps.LatLng(37.5284, 126.9205);
+          // 더 파티움 여의도 - 서울특별시 영등포구 은행로 30 (중소기업중앙회)
+          const venueLocation = new naver.maps.LatLng(37.52810299154129, 126.92278739271629);
           const map = new naver.maps.Map('map-area', {
             center: venueLocation,
             zoom: 16,
