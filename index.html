@@ -15,6 +15,13 @@
     <link rel="icon" type="image/svg+xml" href="assets/icon_heart_large.svg" />
     <link rel="apple-touch-icon" href="assets/icon_heart_large.svg" />
 
+    <!-- perf: 폰트·히어로 이미지 우선 로딩 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preload" href="assets/MaplestoryFont/Maplestory-Bold.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="assets/MaplestoryFont/Maplestory-Light.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" />
+
     <!-- Style CSS -->
     <link rel="stylesheet" href="css/style.css" />
 
@@ -192,17 +199,17 @@
             <div class="ludi-character-stage">
               <!-- Groom Speech Bubble: 나 장가간다!! -->
               <div class="maple-speech-bubble groom-bubble">
-                <img src="assets/textbox_size1.png" alt="말풍선" class="speech-bubble-bg" />
+                <img src="assets/textbox_size1.webp" alt="말풍선" class="speech-bubble-bg" />
                 <span class="speech-bubble-text">나 장가간다!!</span>
               </div>
 
               <!-- Main Couple Sprite -->
-              <img src="assets/couple.png" alt="신랑 배정근 & 신부 한지수 캐릭터" class="maple-couple-sprite" />
+              <img src="assets/couple.webp" alt="신랑 배정근 & 신부 한지수 캐릭터" class="maple-couple-sprite" />
 
               <!-- Couple Nameplates Row -->
               <div class="maple-nameplates-row">
-                <img src="assets/groom_name.png" alt="배정근 명찰" class="maple-nameplate groom" />
-                <img src="assets/bride_name.png" alt="한지수 명찰" class="maple-nameplate bride" />
+                <img src="assets/groom_name.webp" alt="배정근 명찰" class="maple-nameplate groom" />
+                <img src="assets/bride_name.webp" alt="한지수 명찰" class="maple-nameplate bride" />
               </div>
             </div>
 
@@ -320,16 +327,16 @@
             </div>
             <div class="maple-tooltip-body">
               <div class="maple-tooltip-avatar-box">
-                <img src="assets/groom.png" alt="신랑 배정근 캐릭터" class="maple-pixel-avatar" />
+                <img loading="lazy" decoding="async" src="assets/groom.webp" alt="신랑 배정근 캐릭터" class="maple-pixel-avatar" />
               </div>
               <div class="maple-tooltip-info">
                 <div class="stat-group">
                   <p class="stat-highlight">[신랑]</p>
                   <p class="stat-line">레벨: 37</p>
                   <p class="stat-line">사랑: 99,999,999</p>
-                  <p class="stat-line">다정함: 99,999</p>
-                  <p class="stat-line">STR(든든함): 9,999</p>
-                  <p class="stat-line">DEX(센스): 99,999</p>
+                  <p class="stat-line">다정함: 999,999</p>
+                  <p class="stat-line">STR(든든함): 99,999</p>
+                  <p class="stat-line">DEX(센스): 9,999</p>
                   <p class="stat-line">LUK(지수 만남): 777,777</p>
                 </div>
                 <div class="stat-group-sub">
@@ -346,12 +353,12 @@
             </div>
             <div class="maple-tooltip-body">
               <div class="maple-tooltip-avatar-box">
-                <img src="assets/bride.png" alt="신부 한지수 캐릭터" class="maple-pixel-avatar" />
+                <img loading="lazy" decoding="async" src="assets/bride.webp" alt="신부 한지수 캐릭터" class="maple-pixel-avatar" />
               </div>
               <div class="maple-tooltip-info">
                 <div class="stat-group">
                   <p class="stat-highlight">[신부]</p>
-                  <p class="stat-line">레벨: 37</p>
+                  <p class="stat-line">레벨: 34</p>
                   <p class="stat-line">사랑: MAX</p>
                   <p class="stat-line">애교: MAX</p>
                   <p class="stat-line">전투력: 2억 8198만 6344</p>
@@ -370,27 +377,27 @@
       <!-- 4. Interactive Map Section (Ludibrium Toy Factory - RSVP & Account Triggers) -->
       <section class="section-wrapper interactive-map-section" data-section-id="interactive-map">
         <div class="interactive-map-stage">
-          <img src="assets/ludi_petshop_bg.png" alt="루디브리엄 장난감공장" class="interactive-map-bg" />
+          <img loading="lazy" decoding="async" src="assets/ludi_petshop_bg.webp" alt="루디브리엄 장난감공장" class="interactive-map-bg" />
 
           <!-- Upper Level: Knight NPC -> RSVP Modal -->
           <div class="interactive-target rsvp-target" id="btn-open-rsvp" role="button" tabindex="0" aria-label="참석 의사 전달하기">
-            <img src="assets/quest.webp" alt="퀘스트 전구" class="quest-bulb-icon" />
-            <img src="assets/rsvp.webp" alt="참석의사 전달 기사 NPC" class="npc-knight-sprite" />
-            <img src="assets/rsvp2.png" alt="참석의사 명찰" class="interactive-nameplate rsvp-plate" />
+            <img loading="lazy" decoding="async" src="assets/quest.webp" alt="퀘스트 전구" class="quest-bulb-icon" />
+            <img loading="lazy" decoding="async" src="assets/rsvp.webp" alt="참석의사 전달 기사 NPC" class="npc-knight-sprite" />
+            <img loading="lazy" decoding="async" src="assets/rsvp2.webp" alt="참석의사 명찰" class="interactive-nameplate rsvp-plate" />
           </div>
 
           <!-- Lower Level: Bride Character -> Bride Account Modal -->
           <div class="interactive-target bride-target" id="btn-open-bride-account" role="button" tabindex="0" aria-label="신부측 마음 전하실 곳">
-            <img src="assets/quest.webp" alt="퀘스트 전구" class="quest-bulb-icon" />
-            <img src="assets/bride.png" alt="신부 한지수 캐릭터" class="character-sprite bride" />
-            <img src="assets/bride_name.png" alt="한지수 명찰" class="interactive-nameplate bride-plate" />
+            <img loading="lazy" decoding="async" src="assets/quest.webp" alt="퀘스트 전구" class="quest-bulb-icon" />
+            <img loading="lazy" decoding="async" src="assets/bride.webp" alt="신부 한지수 캐릭터" class="character-sprite bride" />
+            <img loading="lazy" decoding="async" src="assets/bride_name.webp" alt="한지수 명찰" class="interactive-nameplate bride-plate" />
           </div>
 
           <!-- Lower Level: Groom Character -> Groom Account Modal -->
           <div class="interactive-target groom-target" id="btn-open-groom-account" role="button" tabindex="0" aria-label="신랑측 마음 전하실 곳">
-            <img src="assets/quest.webp" alt="퀘스트 전구" class="quest-bulb-icon" />
-            <img src="assets/groom.png" alt="신랑 배정근 캐릭터" class="character-sprite groom" />
-            <img src="assets/groom_name.png" alt="배정근 명찰" class="interactive-nameplate groom-plate" />
+            <img loading="lazy" decoding="async" src="assets/quest.webp" alt="퀘스트 전구" class="quest-bulb-icon" />
+            <img loading="lazy" decoding="async" src="assets/groom.webp" alt="신랑 배정근 캐릭터" class="character-sprite groom" />
+            <img loading="lazy" decoding="async" src="assets/groom_name.webp" alt="배정근 명찰" class="interactive-nameplate groom-plate" />
           </div>
         </div>
       </section>
@@ -398,87 +405,87 @@
       <!-- 5. Gallery Section (Lego Castle Tower Frame with Portal Warp) -->
       <section class="section-wrapper gallery-section" data-section-id="gallery">
         <div class="gallery-tower-wrap">
-          <img src="assets/gallery_tower_crown.png" alt="레고 성탑 지붕" class="gallery-tower-crown" />
+          <img loading="lazy" decoding="async" src="assets/gallery_tower_crown.webp" alt="레고 성탑 지붕" class="gallery-tower-crown" />
 
           <div class="gallery-photo-frame" id="gallery-photo-frame" title="사진을 터치하면 크게 볼 수 있어요">
             <!-- Left Side Tower Column (Overlay above photo) -->
             <div class="gallery-side-tower tower-left" aria-hidden="true">
-              <img src="assets/left-tower.png" alt="" class="tower-side-brick" />
-              <img src="assets/left-tower2.png" alt="" class="tower-side-brick" />
-              <img src="assets/left-tower3.png" alt="" class="tower-side-brick" />
+              <img loading="lazy" decoding="async" src="assets/left-tower.webp" alt="" class="tower-side-brick" />
+              <img loading="lazy" decoding="async" src="assets/left-tower2.webp" alt="" class="tower-side-brick" />
+              <img loading="lazy" decoding="async" src="assets/left-tower3.webp" alt="" class="tower-side-brick" />
             </div>
 
             <!-- Right Side Tower Column (Overlay above photo) -->
             <div class="gallery-side-tower tower-right" aria-hidden="true">
-              <img src="assets/right-tower.png" alt="" class="tower-side-brick" />
-              <img src="assets/right-tower2.png" alt="" class="tower-side-brick" />
-              <img src="assets/right-tower3.png" alt="" class="tower-side-brick" />
+              <img loading="lazy" decoding="async" src="assets/right-tower.webp" alt="" class="tower-side-brick" />
+              <img loading="lazy" decoding="async" src="assets/right-tower2.webp" alt="" class="tower-side-brick" />
+              <img loading="lazy" decoding="async" src="assets/right-tower3.webp" alt="" class="tower-side-brick" />
             </div>
 
             <div class="gallery-photo-item active" data-index="0">
               <img src="assets/gallery/hj2_7642.webp" alt="웨딩 사진 1" loading="lazy" />
             </div>
             <div class="gallery-photo-item" data-index="1">
-              <img src="assets/gallery/hj2_7606.webp" alt="웨딩 사진 2" loading="lazy" />
+              <img data-src="assets/gallery/hj2_7606.webp" alt="웨딩 사진 2" loading="lazy" />
             </div>
             <div class="gallery-photo-item" data-index="2">
-              <img src="assets/gallery/hj2_7118.webp" alt="웨딩 사진 3" loading="lazy" />
+              <img data-src="assets/gallery/hj2_7118.webp" alt="웨딩 사진 3" loading="lazy" />
             </div>
             <div class="gallery-photo-item" data-index="3">
-              <img src="assets/gallery/hj2_7131.webp" alt="웨딩 사진 4" loading="lazy" />
+              <img data-src="assets/gallery/hj2_7131.webp" alt="웨딩 사진 4" loading="lazy" />
             </div>
             <div class="gallery-photo-item" data-index="4">
-              <img src="assets/gallery/hj2_6930.webp" alt="웨딩 사진 5" loading="lazy" />
+              <img data-src="assets/gallery/hj2_6930.webp" alt="웨딩 사진 5" loading="lazy" />
             </div>
             <div class="gallery-photo-item" data-index="5">
-              <img src="assets/gallery/hj2_7633.webp" alt="웨딩 사진 6" loading="lazy" />
+              <img data-src="assets/gallery/hj2_7633.webp" alt="웨딩 사진 6" loading="lazy" />
             </div>
             <div class="gallery-photo-item" data-index="6">
-              <img src="assets/gallery/hj2_7906.webp" alt="웨딩 사진 7" loading="lazy" />
+              <img data-src="assets/gallery/hj2_7906.webp" alt="웨딩 사진 7" loading="lazy" />
             </div>
             <div class="gallery-photo-item" data-index="7">
-              <img src="assets/gallery/hj2_7724.webp" alt="웨딩 사진 8" loading="lazy" />
+              <img data-src="assets/gallery/hj2_7724.webp" alt="웨딩 사진 8" loading="lazy" />
             </div>
             <div class="gallery-photo-item" data-index="8">
-              <img src="assets/gallery/hj2_7889.webp" alt="웨딩 사진 9" loading="lazy" />
+              <img data-src="assets/gallery/hj2_7889.webp" alt="웨딩 사진 9" loading="lazy" />
             </div>
             <div class="gallery-photo-item" data-index="9">
-              <img src="assets/gallery/hj2_7383.webp" alt="웨딩 사진 10" loading="lazy" />
+              <img data-src="assets/gallery/hj2_7383.webp" alt="웨딩 사진 10" loading="lazy" />
             </div>
             <div class="gallery-photo-item" data-index="10">
-              <img src="assets/gallery/hj2_7351.webp" alt="웨딩 사진 11" loading="lazy" />
+              <img data-src="assets/gallery/hj2_7351.webp" alt="웨딩 사진 11" loading="lazy" />
             </div>
             <div class="gallery-photo-item" data-index="11">
-              <img src="assets/gallery/hj2_7458.webp" alt="웨딩 사진 12" loading="lazy" />
+              <img data-src="assets/gallery/hj2_7458.webp" alt="웨딩 사진 12" loading="lazy" />
             </div>
             <div class="gallery-photo-item" data-index="12">
-              <img src="assets/gallery/hj2_8290.webp" alt="웨딩 사진 13" loading="lazy" />
+              <img data-src="assets/gallery/hj2_8290.webp" alt="웨딩 사진 13" loading="lazy" />
             </div>
             <div class="gallery-photo-item" data-index="13">
-              <img src="assets/gallery/hj2_8265.webp" alt="웨딩 사진 14" loading="lazy" />
+              <img data-src="assets/gallery/hj2_8265.webp" alt="웨딩 사진 14" loading="lazy" />
             </div>
             <div class="gallery-photo-item" data-index="14">
-              <img src="assets/gallery/hj2_8355.webp" alt="웨딩 사진 15" loading="lazy" />
+              <img data-src="assets/gallery/hj2_8355.webp" alt="웨딩 사진 15" loading="lazy" />
             </div>
             <div class="gallery-photo-item" data-index="15">
-              <img src="assets/gallery/hj2_8399.webp" alt="웨딩 사진 16" loading="lazy" />
+              <img data-src="assets/gallery/hj2_8399.webp" alt="웨딩 사진 16" loading="lazy" />
             </div>
             <div class="gallery-photo-item" data-index="16">
-              <img src="assets/gallery/hj2_8282.webp" alt="웨딩 사진 17" loading="lazy" />
+              <img data-src="assets/gallery/hj2_8282.webp" alt="웨딩 사진 17" loading="lazy" />
             </div>
           </div>
 
           <div class="gallery-tower-bottom-wrap">
             <div class="gallery-portal-btn gallery-portal-prev" id="gallery-portal-prev" role="button" aria-label="이전 사진 포탈 워프" tabindex="0">
-              <img src="assets/left.png" alt="이전 화살표" class="gallery-portal-arrow arrow-left" />
-              <img src="assets/portal.webp" alt="이전 사진 포탈" class="gallery-portal-img" />
+              <img loading="lazy" decoding="async" src="assets/left_red.webp" alt="이전 화살표" class="gallery-portal-arrow arrow-left" />
+              <img loading="lazy" decoding="async" src="assets/portal.webp" alt="이전 사진 포탈" class="gallery-portal-img" />
             </div>
             <div class="gallery-portal-btn gallery-portal-next" id="gallery-portal-next" role="button" aria-label="다음 사진 포탈 워프" tabindex="0">
-              <img src="assets/right.png" alt="다음 화살표" class="gallery-portal-arrow arrow-right" />
-              <img src="assets/portal.webp" alt="다음 사진 포탈" class="gallery-portal-img" />
+              <img loading="lazy" decoding="async" src="assets/right_red.webp" alt="다음 화살표" class="gallery-portal-arrow arrow-right" />
+              <img loading="lazy" decoding="async" src="assets/portal.webp" alt="다음 사진 포탈" class="gallery-portal-img" />
             </div>
           </div>
-          <img src="assets/gallery_tower_base.png" alt="레고 성탑 받침" class="gallery-tower-base" />
+          <img loading="lazy" decoding="async" src="assets/gallery_tower_base.webp" alt="레고 성탑 받침" class="gallery-tower-base" />
         </div>
       </section>
 
@@ -488,7 +495,7 @@
           <p class="ludi-invitation-text">
             2027년 1월 9일 오후 12시 40분<br />
             더 파티움 여의도 그랜드컨벤션홀에서<br />
-            기다리고 있을게요
+            기다리고 있을게요👰‍♀️💍🤵‍♂️
           </p>
         </div>
       </section>
@@ -499,8 +506,8 @@
       <section class="section-wrapper ludi-date-section" data-section-id="date">
         <div class="ludi-clock-container">
           <div class="ludi-clock-stage">
-            <img src="assets/ludi_clock.png" alt="루디브리엄 파풀라투스 시계탑" class="ludi-clock-sprite" />
-            <img src="assets/toy.webp" alt="루디브리엄 장난감 병정" class="ludi-clock-toy" />
+            <img loading="lazy" decoding="async" src="assets/ludi_clock.webp" alt="루디브리엄 파풀라투스 시계탑" class="ludi-clock-sprite" />
+            <img loading="lazy" decoding="async" src="assets/toy.webp" alt="루디브리엄 장난감 병정" class="ludi-clock-toy" />
           </div>
         </div>
 
@@ -531,26 +538,26 @@
         <!-- Festival Notice Card -->
         <div class="ludi-notice-card festival-card">
           <div class="ludi-card-header">
-            <img src="assets/mon3.png" alt="주황버섯" class="ludi-monster-icon-1" />
+            <img loading="lazy" decoding="async" src="assets/mon3.webp" alt="주황버섯" class="ludi-monster-icon-1" />
             <h4 class="ludi-card-title">겨울철 오시는 길 안내</h4>
           </div>
           <p class="ludi-card-desc">
-            추운 날씨에도 축하의 발걸음 감사합니다.<br>
+            추운 날씨에도 축하의 발걸음을 해주셔서 감사합니다.<br>
             따뜻한 옷으로 방어력 버프를 꼭 챙겨 주세요.<br />
-            주차 공간이 협소하니 대중교통 이용을 부탁드립니다.
+            웨딩홀 내 주차 공간이 협소하오니 양해 부탁드립니다.
           </p>
         </div>
 
         <!-- Naver Map Canvas with Ladder -->
         <div class="ludi-map-wrapper">
           <div class="ludi-map-ladder" id="ludi-map-ladder">
-            <img src="assets/portal2.webp" alt="사다리 상단 포탈" class="ladder-portal-top ladder-portal-btn" id="ladder-portal-top" role="button" tabindex="0" aria-label="상단 포탈 워프" />
-            <img src="assets/map_ladder.png" alt="사다리" class="ladder-sprite" />
-            <img src="assets/map_ladder.png" alt="사다리" class="ladder-sprite" />
-            <img src="assets/map_ladder.png" alt="사다리" class="ladder-sprite" />
-            <img src="assets/portal.webp" alt="사다리 하단 포탈" class="ladder-portal-bottom ladder-portal-btn" id="ladder-portal-bottom" role="button" tabindex="0" aria-label="하단 포탈 워프" />
+            <img loading="lazy" decoding="async" src="assets/portal2.webp" alt="사다리 상단 포탈" class="ladder-portal-top ladder-portal-btn" id="ladder-portal-top" role="button" tabindex="0" aria-label="상단 포탈 워프" />
+            <img loading="lazy" decoding="async" src="assets/map_ladder.webp" alt="사다리" class="ladder-sprite" />
+            <img loading="lazy" decoding="async" src="assets/map_ladder.webp" alt="사다리" class="ladder-sprite" />
+            <img loading="lazy" decoding="async" src="assets/map_ladder.webp" alt="사다리" class="ladder-sprite" />
+            <img loading="lazy" decoding="async" src="assets/portal.webp" alt="사다리 하단 포탈" class="ladder-portal-bottom ladder-portal-btn" id="ladder-portal-bottom" role="button" tabindex="0" aria-label="하단 포탈 워프" />
             <div id="ladder-falling-toy" class="ladder-falling-toy" aria-hidden="true">
-              <img src="assets/toy.webp" alt="" class="ladder-toy-img" />
+              <img loading="lazy" decoding="async" src="assets/toy.webp" alt="" class="ladder-toy-img" />
             </div>
           </div>
           <div class="ludi-map-inner">
@@ -568,7 +575,7 @@
         <div class="transport-section ludi-transport-section">
           <div class="ludi-notice-card transport-card">
             <div class="ludi-card-header">
-              <img src="assets/mon1.png" alt="파란달팽이" class="ludi-monster-icon-2" />
+              <img loading="lazy" decoding="async" src="assets/mon1.webp" alt="파란달팽이" class="ludi-monster-icon-2" />
               <h4 class="ludi-card-title">지하철 안내</h4>
             </div>
             <p class="ludi-card-desc">9호선 국회의사당역 3번 출구 (도보 5분)</p>
@@ -577,7 +584,7 @@
 
           <div class="ludi-notice-card transport-card">
             <div class="ludi-card-header">
-              <img src="assets/mon2.png" alt="빨간달팽이" class="ludi-monster-icon-2" />
+              <img loading="lazy" decoding="async" src="assets/mon2.webp" alt="빨간달팽이" class="ludi-monster-icon-2" />
               <h4 class="ludi-card-title">셔틀버스 안내</h4>
             </div>
             <p class="ludi-card-desc">5호선 여의나루역 1번 출구 셔틀버스 무료 운행</p>
@@ -587,7 +594,7 @@
 
           <div class="ludi-notice-card transport-card">
             <div class="ludi-card-header">
-              <img src="assets/mon4.png" alt="슬라임" class="ludi-monster-icon-1" />
+              <img loading="lazy" decoding="async" src="assets/mon4.webp" alt="슬라임" class="ludi-monster-icon-1" />
               <h4 class="ludi-card-title">자가용 및 주차 안내</h4>
             </div>
             <p class="ludi-card-desc">예식장 내 주차 가능 · 90분 무료 주차</p>
@@ -596,7 +603,7 @@
 
           <div class="ludi-notice-card transport-card">
             <div class="ludi-card-header">
-              <img src="assets/mon3.png" alt="슬라임" class="ludi-monster-icon-1" />
+              <img loading="lazy" decoding="async" src="assets/mon3.webp" alt="슬라임" class="ludi-monster-icon-1" />
               <h4 class="ludi-card-title">천안 대절버스 안내</h4>
             </div>
             <p class="ludi-card-desc">천안시청 봉서홀 앞 주차장</p>
@@ -622,14 +629,14 @@
           <!-- Interactive Stage: Couple (Left) - Click (Center) - Paparachi (Right) -->
           <label for="photo-file-input" class="snap-interactive-stage snap-photo-studio-btn" role="button" aria-label="하객 사진 및 영상 업로드" tabindex="0">
             <div class="snap-studio-couple">
-              <img src="assets/wedding.webp" alt="웨딩 배경" class="snap-wedding-bg" />
-              <img src="assets/couple.png" alt="신랑 신부 캐릭터" class="snap-couple-img" />
+              <img loading="lazy" decoding="async" src="assets/wedding.webp" alt="웨딩 배경" class="snap-wedding-bg" />
+              <img loading="lazy" decoding="async" src="assets/couple.webp" alt="신랑 신부 캐릭터" class="snap-couple-img" />
             </div>
             <div class="snap-studio-click">
-              <img src="assets/click.webp" alt="사진 올리기 클릭" class="snap-click-img" />
+              <img loading="lazy" decoding="async" src="assets/click.webp" alt="사진 올리기 클릭" class="snap-click-img" />
             </div>
             <div class="snap-studio-paparachi">
-              <img src="assets/paparachi.webp" alt="파파라치 사진 기자" class="snap-paparachi-img" />
+              <img loading="lazy" decoding="async" src="assets/paparachi.webp" alt="파파라치 사진 기자" class="snap-paparachi-img" />
             </div>
           </label>
 
@@ -651,11 +658,11 @@
         </div>
         <!-- Lower Paparazzi Crowd -->
         <div class="snap-paparazzi-bottom-wrap">
-          <img src="assets/snap_paparazzi.png" alt="메이플 하객 사진 기자단" class="snap-paparazzi-img" />
+          <img loading="lazy" decoding="async" src="assets/snap_paparazzi.webp" alt="메이플 하객 사진 기자단" class="snap-paparazzi-img" />
         </div>
         <!-- Ending Tower Base Pedestal -->
         <div class="ending-tower-base-wrap">
-          <img src="assets/gallery_tower_base.png" alt="레고 성탑 하단 받침" class="gallery-tower-base" />
+          <img loading="lazy" decoding="async" src="assets/gallery_tower_base.webp" alt="레고 성탑 하단 받침" class="gallery-tower-base" />
         </div>
       </section>
     </div>
@@ -829,161 +836,161 @@
       <div class="lightbox-slider-track" id="lightbox-slider-track">
         <!-- Set 0 (Clone Pre) -->
         <div class="lightbox-slide" data-set="0" data-real-index="0">
-          <img src="assets/gallery/hj2_7642.webp" alt="확대 사진 1" />
+          <img loading="lazy" decoding="async" src="assets/gallery/hj2_7642.webp" alt="확대 사진 1" />
         </div>
         <div class="lightbox-slide" data-set="0" data-real-index="1">
-          <img src="assets/gallery/hj2_7606.webp" alt="확대 사진 2" />
+          <img loading="lazy" decoding="async" src="assets/gallery/hj2_7606.webp" alt="확대 사진 2" />
         </div>
         <div class="lightbox-slide" data-set="0" data-real-index="2">
-          <img src="assets/gallery/hj2_7118.webp" alt="확대 사진 3" />
+          <img loading="lazy" decoding="async" src="assets/gallery/hj2_7118.webp" alt="확대 사진 3" />
         </div>
         <div class="lightbox-slide" data-set="0" data-real-index="3">
-          <img src="assets/gallery/hj2_7131.webp" alt="확대 사진 4" />
+          <img loading="lazy" decoding="async" src="assets/gallery/hj2_7131.webp" alt="확대 사진 4" />
         </div>
         <div class="lightbox-slide" data-set="0" data-real-index="4">
-          <img src="assets/gallery/hj2_6930.webp" alt="확대 사진 5" />
+          <img loading="lazy" decoding="async" src="assets/gallery/hj2_6930.webp" alt="확대 사진 5" />
         </div>
         <div class="lightbox-slide" data-set="0" data-real-index="5">
-          <img src="assets/gallery/hj2_7633.webp" alt="확대 사진 6" />
+          <img loading="lazy" decoding="async" src="assets/gallery/hj2_7633.webp" alt="확대 사진 6" />
         </div>
         <div class="lightbox-slide" data-set="0" data-real-index="6">
-          <img src="assets/gallery/hj2_7906.webp" alt="확대 사진 7" />
+          <img loading="lazy" decoding="async" src="assets/gallery/hj2_7906.webp" alt="확대 사진 7" />
         </div>
         <div class="lightbox-slide" data-set="0" data-real-index="7">
-          <img src="assets/gallery/hj2_7724.webp" alt="확대 사진 8" />
+          <img loading="lazy" decoding="async" src="assets/gallery/hj2_7724.webp" alt="확대 사진 8" />
         </div>
         <div class="lightbox-slide" data-set="0" data-real-index="8">
-          <img src="assets/gallery/hj2_7889.webp" alt="확대 사진 9" />
+          <img loading="lazy" decoding="async" src="assets/gallery/hj2_7889.webp" alt="확대 사진 9" />
         </div>
         <div class="lightbox-slide" data-set="0" data-real-index="9">
-          <img src="assets/gallery/hj2_7383.webp" alt="확대 사진 10" />
+          <img loading="lazy" decoding="async" src="assets/gallery/hj2_7383.webp" alt="확대 사진 10" />
         </div>
         <div class="lightbox-slide" data-set="0" data-real-index="10">
-          <img src="assets/gallery/hj2_7351.webp" alt="확대 사진 11" />
+          <img loading="lazy" decoding="async" src="assets/gallery/hj2_7351.webp" alt="확대 사진 11" />
         </div>
         <div class="lightbox-slide" data-set="0" data-real-index="11">
-          <img src="assets/gallery/hj2_7458.webp" alt="확대 사진 12" />
+          <img loading="lazy" decoding="async" src="assets/gallery/hj2_7458.webp" alt="확대 사진 12" />
         </div>
         <div class="lightbox-slide" data-set="0" data-real-index="12">
-          <img src="assets/gallery/hj2_8290.webp" alt="확대 사진 13" />
+          <img loading="lazy" decoding="async" src="assets/gallery/hj2_8290.webp" alt="확대 사진 13" />
         </div>
         <div class="lightbox-slide" data-set="0" data-real-index="13">
-          <img src="assets/gallery/hj2_8265.webp" alt="확대 사진 14" />
+          <img loading="lazy" decoding="async" src="assets/gallery/hj2_8265.webp" alt="확대 사진 14" />
         </div>
         <div class="lightbox-slide" data-set="0" data-real-index="14">
-          <img src="assets/gallery/hj2_8355.webp" alt="확대 사진 15" />
+          <img loading="lazy" decoding="async" src="assets/gallery/hj2_8355.webp" alt="확대 사진 15" />
         </div>
         <div class="lightbox-slide" data-set="0" data-real-index="15">
-          <img src="assets/gallery/hj2_8399.webp" alt="확대 사진 16" />
+          <img loading="lazy" decoding="async" src="assets/gallery/hj2_8399.webp" alt="확대 사진 16" />
         </div>
         <div class="lightbox-slide" data-set="0" data-real-index="16">
-          <img src="assets/gallery/hj2_8282.webp" alt="확대 사진 17" />
+          <img loading="lazy" decoding="async" src="assets/gallery/hj2_8282.webp" alt="확대 사진 17" />
         </div>
 
         <!-- Set 1 (Main Set) -->
         <div class="lightbox-slide" data-set="1" data-real-index="0">
-          <img src="assets/gallery/hj2_7642.webp" alt="확대 사진 1" />
+          <img loading="lazy" decoding="async" src="assets/gallery/hj2_7642.webp" alt="확대 사진 1" />
         </div>
         <div class="lightbox-slide" data-set="1" data-real-index="1">
-          <img src="assets/gallery/hj2_7606.webp" alt="확대 사진 2" />
+          <img loading="lazy" decoding="async" src="assets/gallery/hj2_7606.webp" alt="확대 사진 2" />
         </div>
         <div class="lightbox-slide" data-set="1" data-real-index="2">
-          <img src="assets/gallery/hj2_7118.webp" alt="확대 사진 3" />
+          <img loading="lazy" decoding="async" src="assets/gallery/hj2_7118.webp" alt="확대 사진 3" />
         </div>
         <div class="lightbox-slide" data-set="1" data-real-index="3">
-          <img src="assets/gallery/hj2_7131.webp" alt="확대 사진 4" />
+          <img loading="lazy" decoding="async" src="assets/gallery/hj2_7131.webp" alt="확대 사진 4" />
         </div>
         <div class="lightbox-slide" data-set="1" data-real-index="4">
-          <img src="assets/gallery/hj2_6930.webp" alt="확대 사진 5" />
+          <img loading="lazy" decoding="async" src="assets/gallery/hj2_6930.webp" alt="확대 사진 5" />
         </div>
         <div class="lightbox-slide" data-set="1" data-real-index="5">
-          <img src="assets/gallery/hj2_7633.webp" alt="확대 사진 6" />
+          <img loading="lazy" decoding="async" src="assets/gallery/hj2_7633.webp" alt="확대 사진 6" />
         </div>
         <div class="lightbox-slide" data-set="1" data-real-index="6">
-          <img src="assets/gallery/hj2_7906.webp" alt="확대 사진 7" />
+          <img loading="lazy" decoding="async" src="assets/gallery/hj2_7906.webp" alt="확대 사진 7" />
         </div>
         <div class="lightbox-slide" data-set="1" data-real-index="7">
-          <img src="assets/gallery/hj2_7724.webp" alt="확대 사진 8" />
+          <img loading="lazy" decoding="async" src="assets/gallery/hj2_7724.webp" alt="확대 사진 8" />
         </div>
         <div class="lightbox-slide" data-set="1" data-real-index="8">
-          <img src="assets/gallery/hj2_7889.webp" alt="확대 사진 9" />
+          <img loading="lazy" decoding="async" src="assets/gallery/hj2_7889.webp" alt="확대 사진 9" />
         </div>
         <div class="lightbox-slide" data-set="1" data-real-index="9">
-          <img src="assets/gallery/hj2_7383.webp" alt="확대 사진 10" />
+          <img loading="lazy" decoding="async" src="assets/gallery/hj2_7383.webp" alt="확대 사진 10" />
         </div>
         <div class="lightbox-slide" data-set="1" data-real-index="10">
-          <img src="assets/gallery/hj2_7351.webp" alt="확대 사진 11" />
+          <img loading="lazy" decoding="async" src="assets/gallery/hj2_7351.webp" alt="확대 사진 11" />
         </div>
         <div class="lightbox-slide" data-set="1" data-real-index="11">
-          <img src="assets/gallery/hj2_7458.webp" alt="확대 사진 12" />
+          <img loading="lazy" decoding="async" src="assets/gallery/hj2_7458.webp" alt="확대 사진 12" />
         </div>
         <div class="lightbox-slide" data-set="1" data-real-index="12">
-          <img src="assets/gallery/hj2_8290.webp" alt="확대 사진 13" />
+          <img loading="lazy" decoding="async" src="assets/gallery/hj2_8290.webp" alt="확대 사진 13" />
         </div>
         <div class="lightbox-slide" data-set="1" data-real-index="13">
-          <img src="assets/gallery/hj2_8265.webp" alt="확대 사진 14" />
+          <img loading="lazy" decoding="async" src="assets/gallery/hj2_8265.webp" alt="확대 사진 14" />
         </div>
         <div class="lightbox-slide" data-set="1" data-real-index="14">
-          <img src="assets/gallery/hj2_8355.webp" alt="확대 사진 15" />
+          <img loading="lazy" decoding="async" src="assets/gallery/hj2_8355.webp" alt="확대 사진 15" />
         </div>
         <div class="lightbox-slide" data-set="1" data-real-index="15">
-          <img src="assets/gallery/hj2_8399.webp" alt="확대 사진 16" />
+          <img loading="lazy" decoding="async" src="assets/gallery/hj2_8399.webp" alt="확대 사진 16" />
         </div>
         <div class="lightbox-slide" data-set="1" data-real-index="16">
-          <img src="assets/gallery/hj2_8282.webp" alt="확대 사진 17" />
+          <img loading="lazy" decoding="async" src="assets/gallery/hj2_8282.webp" alt="확대 사진 17" />
         </div>
 
         <!-- Set 2 (Clone Post) -->
         <div class="lightbox-slide" data-set="2" data-real-index="0">
-          <img src="assets/gallery/hj2_7642.webp" alt="확대 사진 1" />
+          <img loading="lazy" decoding="async" src="assets/gallery/hj2_7642.webp" alt="확대 사진 1" />
         </div>
         <div class="lightbox-slide" data-set="2" data-real-index="1">
-          <img src="assets/gallery/hj2_7606.webp" alt="확대 사진 2" />
+          <img loading="lazy" decoding="async" src="assets/gallery/hj2_7606.webp" alt="확대 사진 2" />
         </div>
         <div class="lightbox-slide" data-set="2" data-real-index="2">
-          <img src="assets/gallery/hj2_7118.webp" alt="확대 사진 3" />
+          <img loading="lazy" decoding="async" src="assets/gallery/hj2_7118.webp" alt="확대 사진 3" />
         </div>
         <div class="lightbox-slide" data-set="2" data-real-index="3">
-          <img src="assets/gallery/hj2_7131.webp" alt="확대 사진 4" />
+          <img loading="lazy" decoding="async" src="assets/gallery/hj2_7131.webp" alt="확대 사진 4" />
         </div>
         <div class="lightbox-slide" data-set="2" data-real-index="4">
-          <img src="assets/gallery/hj2_6930.webp" alt="확대 사진 5" />
+          <img loading="lazy" decoding="async" src="assets/gallery/hj2_6930.webp" alt="확대 사진 5" />
         </div>
         <div class="lightbox-slide" data-set="2" data-real-index="5">
-          <img src="assets/gallery/hj2_7633.webp" alt="확대 사진 6" />
+          <img loading="lazy" decoding="async" src="assets/gallery/hj2_7633.webp" alt="확대 사진 6" />
         </div>
         <div class="lightbox-slide" data-set="2" data-real-index="6">
-          <img src="assets/gallery/hj2_7906.webp" alt="확대 사진 7" />
+          <img loading="lazy" decoding="async" src="assets/gallery/hj2_7906.webp" alt="확대 사진 7" />
         </div>
         <div class="lightbox-slide" data-set="2" data-real-index="7">
-          <img src="assets/gallery/hj2_7724.webp" alt="확대 사진 8" />
+          <img loading="lazy" decoding="async" src="assets/gallery/hj2_7724.webp" alt="확대 사진 8" />
         </div>
         <div class="lightbox-slide" data-set="2" data-real-index="8">
-          <img src="assets/gallery/hj2_7889.webp" alt="확대 사진 9" />
+          <img loading="lazy" decoding="async" src="assets/gallery/hj2_7889.webp" alt="확대 사진 9" />
         </div>
         <div class="lightbox-slide" data-set="2" data-real-index="9">
-          <img src="assets/gallery/hj2_7383.webp" alt="확대 사진 10" />
+          <img loading="lazy" decoding="async" src="assets/gallery/hj2_7383.webp" alt="확대 사진 10" />
         </div>
         <div class="lightbox-slide" data-set="2" data-real-index="10">
-          <img src="assets/gallery/hj2_7351.webp" alt="확대 사진 11" />
+          <img loading="lazy" decoding="async" src="assets/gallery/hj2_7351.webp" alt="확대 사진 11" />
         </div>
         <div class="lightbox-slide" data-set="2" data-real-index="11">
-          <img src="assets/gallery/hj2_7458.webp" alt="확대 사진 12" />
+          <img loading="lazy" decoding="async" src="assets/gallery/hj2_7458.webp" alt="확대 사진 12" />
         </div>
         <div class="lightbox-slide" data-set="2" data-real-index="12">
-          <img src="assets/gallery/hj2_8290.webp" alt="확대 사진 13" />
+          <img loading="lazy" decoding="async" src="assets/gallery/hj2_8290.webp" alt="확대 사진 13" />
         </div>
         <div class="lightbox-slide" data-set="2" data-real-index="13">
-          <img src="assets/gallery/hj2_8265.webp" alt="확대 사진 14" />
+          <img loading="lazy" decoding="async" src="assets/gallery/hj2_8265.webp" alt="확대 사진 14" />
         </div>
         <div class="lightbox-slide" data-set="2" data-real-index="14">
-          <img src="assets/gallery/hj2_8355.webp" alt="확대 사진 15" />
+          <img loading="lazy" decoding="async" src="assets/gallery/hj2_8355.webp" alt="확대 사진 15" />
         </div>
         <div class="lightbox-slide" data-set="2" data-real-index="15">
-          <img src="assets/gallery/hj2_8399.webp" alt="확대 사진 16" />
+          <img loading="lazy" decoding="async" src="assets/gallery/hj2_8399.webp" alt="확대 사진 16" />
         </div>
         <div class="lightbox-slide" data-set="2" data-real-index="16">
-          <img src="assets/gallery/hj2_8282.webp" alt="확대 사진 17" />
+          <img loading="lazy" decoding="async" src="assets/gallery/hj2_8282.webp" alt="확대 사진 17" />
         </div>
       </div>
     </div>

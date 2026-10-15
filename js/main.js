@@ -472,6 +472,32 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentGalleryIndex = 0;
   const totalGalleryItems = galleryPhotoItems.length || 6;
 
+  // perf: 갤러리 사진은 data-src로 대기시켰다가 현재/앞뒤 사진만 실제 로딩
+  const loadGalleryImage = (idx) => {
+    const item = galleryPhotoItems[(idx + totalGalleryItems) % totalGalleryItems];
+    const img = item && item.querySelector('img[data-src]');
+    if (img) {
+      img.src = img.dataset.src;
+      img.removeAttribute('data-src');
+    }
+  };
+  const loadGalleryNeighbors = (idx) => {
+    loadGalleryImage(idx);
+    loadGalleryImage(idx + 1);
+    loadGalleryImage(idx - 1);
+  };
+  if (galleryPhotoFrame && 'IntersectionObserver' in window) {
+    const galleryObserver = new IntersectionObserver((entries) => {
+      if (entries.some((entry) => entry.isIntersecting)) {
+        loadGalleryNeighbors(currentGalleryIndex);
+        galleryObserver.disconnect();
+      }
+    }, { rootMargin: '300px 0px' });
+    galleryObserver.observe(galleryPhotoFrame);
+  } else {
+    loadGalleryNeighbors(0);
+  }
+
   const triggerPortalWarp = (direction) => {
     // Play portal audio sound
     playPortalSound();
@@ -485,6 +511,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Transition photo index
     currentGalleryIndex = (currentGalleryIndex + direction + totalGalleryItems) % totalGalleryItems;
+    loadGalleryNeighbors(currentGalleryIndex);
     galleryPhotoItems.forEach((item, idx) => {
       if (idx === currentGalleryIndex) {
         item.classList.add('active');
