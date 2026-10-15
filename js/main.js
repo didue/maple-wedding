@@ -753,57 +753,99 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   };
 
+  // Snap Uploader Name Modal: 파일 선택 후 성함을 받아 업로드 진행
+  const snapNameModal = document.getElementById('snap-name-modal');
+  const snapNameForm = document.getElementById('snap-name-form');
+  const snapUploaderNameInput = document.getElementById('snap-uploader-name');
+  const snapNameModalClose = document.getElementById('snap-name-modal-close');
+  let pendingSnapFiles = [];
+
+  const uploadPhotos = async (files, uploaderName) => {
+    // Demo Mode Guard
+    if (isDemoPage) {
+      showToast(
+        `📸 [데모] ${files.length}장의 사진이 전달되었습니다! (실제 드라이브에는 저장되지 않습니다)`
+      );
+      return;
+    }
+
+    if (photoUploadStatus) photoUploadStatus.classList.add('active');
+    if (photoStatusText) photoStatusText.textContent = `${files.length}장의 사진을 압축 및 전송 중입니다...`;
+    if (photoProgressBar) photoProgressBar.style.width = '45%';
+
+    try {
+      const encodedFiles = await Promise.all(files.map((f) => compressAndEncodeFile(f)));
+
+      if (photoProgressBar) photoProgressBar.style.width = '75%';
+
+      const payload = {
+        action: 'upload_photos',
+        folderId: DRIVE_FOLDER_ID,
+        uploaderName: uploaderName,
+        files: encodedFiles,
+      };
+
+      await fetch(GAS_ENDPOINT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload),
+      });
+
+      if (photoProgressBar) photoProgressBar.style.width = '100%';
+      if (photoStatusText) photoStatusText.textContent = '업로드 완료! 소중한 사진 감사합니다 💖';
+      showToast('소중한 사진이 성공적으로 전달되었습니다! 📸💖');
+
+      setTimeout(() => {
+        if (photoUploadStatus) photoUploadStatus.classList.remove('active');
+        if (photoProgressBar) photoProgressBar.style.width = '0%';
+      }, 3000);
+    } catch (err) {
+      console.error('Upload error:', err);
+      showToast('사진이 전달되었습니다. 감사합니다! ✨');
+      if (photoUploadStatus) photoUploadStatus.classList.remove('active');
+    }
+  };
+
   if (photoFileInput) {
-    photoFileInput.addEventListener('change', async (e) => {
+    photoFileInput.addEventListener('change', (e) => {
       const files = Array.from(e.target.files || []);
+      // 같은 파일 재선택 시에도 change가 발생하도록 즉시 초기화
+      photoFileInput.value = '';
       if (!files.length) return;
 
-      // Demo Mode Guard
-      if (isDemoPage) {
-        showToast(
-          `📸 [데모] ${files.length}장의 사진이 전달되었습니다! (실제 드라이브에는 저장되지 않습니다)`
-        );
-        photoFileInput.value = '';
+      pendingSnapFiles = files;
+      if (snapNameForm) snapNameForm.reset();
+      openModal(snapNameModal);
+      if (snapUploaderNameInput) snapUploaderNameInput.focus();
+    });
+  }
+
+  if (snapNameModalClose) {
+    snapNameModalClose.addEventListener('click', () => {
+      pendingSnapFiles = [];
+      closeModal(snapNameModal);
+    });
+  }
+
+  if (snapNameForm) {
+    snapNameForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      // 드라이브 폴더명에 쓰일 값이므로 경로 구분자 제거
+      const uploaderName = (snapUploaderNameInput ? snapUploaderNameInput.value : '').replace(/[\\/]/g, '').trim();
+      if (!uploaderName) {
+        showToast('성함을 입력해 주세요.');
+        if (snapUploaderNameInput) snapUploaderNameInput.focus();
         return;
       }
-
-      if (photoUploadStatus) photoUploadStatus.classList.add('active');
-      if (photoStatusText) photoStatusText.textContent = `${files.length}장의 사진을 압축 및 전송 중입니다...`;
-      if (photoProgressBar) photoProgressBar.style.width = '45%';
-
-      try {
-        const encodedFiles = await Promise.all(files.map((f) => compressAndEncodeFile(f)));
-
-        if (photoProgressBar) photoProgressBar.style.width = '75%';
-
-        const payload = {
-          action: 'upload_photos',
-          folderId: DRIVE_FOLDER_ID,
-          files: encodedFiles,
-        };
-
-        await fetch(GAS_ENDPOINT_URL, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-          body: JSON.stringify(payload),
-        });
-
-        if (photoProgressBar) photoProgressBar.style.width = '100%';
-        if (photoStatusText) photoStatusText.textContent = '업로드 완료! 소중한 사진 감사합니다 💖';
-        showToast('소중한 사진이 성공적으로 전달되었습니다! 📸💖');
-
-        setTimeout(() => {
-          if (photoUploadStatus) photoUploadStatus.classList.remove('active');
-          if (photoProgressBar) photoProgressBar.style.width = '0%';
-        }, 3000);
-      } catch (err) {
-        console.error('Upload error:', err);
-        showToast('사진이 전달되었습니다. 감사합니다! ✨');
-        if (photoUploadStatus) photoUploadStatus.classList.remove('active');
-      } finally {
-        photoFileInput.value = '';
+      if (!pendingSnapFiles.length) {
+        closeModal(snapNameModal);
+        return;
       }
+      const files = pendingSnapFiles;
+      pendingSnapFiles = [];
+      closeModal(snapNameModal);
+      uploadPhotos(files, uploaderName);
     });
   }
 

@@ -825,6 +825,25 @@
       </div>
     </div>
 
+    <!-- Snap Uploader Name Modal -->
+    <div id="snap-name-modal" class="modal-overlay" aria-hidden="true" role="dialog">
+      <div class="modal-container">
+        <div class="modal-header">
+          <span class="modal-title">사진 보내기</span>
+          <button type="button" class="modal-close-btn" id="snap-name-modal-close" aria-label="닫기">✕</button>
+        </div>
+        <div class="modal-body">
+          <form id="snap-name-form">
+            <p class="modal-desc">소중한 사진을 보내주시는 분의 성함을 남겨주세요</p>
+            <div class="rsvp-form-row">
+              <input type="text" id="snap-uploader-name" class="rsvp-input" placeholder="성함을 입력해 주세요" maxlength="30" required />
+            </div>
+            <button type="submit" class="btn-rsvp-modal-submit">저장</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
     <!-- Lightbox Fullscreen Swipe Modal (Body Root Level for true viewport fixed) -->
     <div id="lightbox-modal" class="lightbox-modal" aria-hidden="true" role="dialog">
       <button id="lightbox-close" class="lightbox-close" aria-label="닫기">
