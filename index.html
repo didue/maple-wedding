@@ -710,23 +710,10 @@
 
             <div class="rsvp-form-row" id="rsvp-count-wrap">
               <label class="rsvp-row-label">동행 인원 (본인 포함)</label>
-              <div class="rsvp-pill-grid">
-                <label class="rsvp-pill-item">
-                  <input type="radio" name="rsvp_count" value="1명" checked />
-                  <span class="rsvp-pill-btn">1명 (본인)</span>
-                </label>
-                <label class="rsvp-pill-item">
-                  <input type="radio" name="rsvp_count" value="2명" />
-                  <span class="rsvp-pill-btn">2명</span>
-                </label>
-                <label class="rsvp-pill-item">
-                  <input type="radio" name="rsvp_count" value="3명" />
-                  <span class="rsvp-pill-btn">3명</span>
-                </label>
-                <label class="rsvp-pill-item">
-                  <input type="radio" name="rsvp_count" value="4명 이상" />
-                  <span class="rsvp-pill-btn">4명 이상</span>
-                </label>
+              <div class="rsvp-stepper">
+                <button type="button" class="rsvp-stepper-btn" id="rsvp-count-minus" aria-label="인원 줄이기" disabled>−</button>
+                <span class="rsvp-stepper-value" id="rsvp-count-value" aria-live="polite">1</span>
+                <button type="button" class="rsvp-stepper-btn" id="rsvp-count-plus" aria-label="인원 늘리기">+</button>
               </div>
             </div>
 
@@ -742,11 +729,6 @@
                   <span class="rsvp-pill-btn">식사 안함</span>
                 </label>
               </div>
-            </div>
-
-            <div class="rsvp-form-row">
-              <label for="rsvp-message" class="rsvp-row-label">축하 메시지 (선택)</label>
-              <textarea id="rsvp-message" class="rsvp-textarea" rows="2" placeholder="따뜻한 축하의 한마디를 남겨주세요"></textarea>
             </div>
 
             <button type="submit" id="rsvp-submit-btn" class="btn-rsvp-modal-submit">전달하기</button>
@@ -768,21 +750,21 @@
             <div class="holder-row">아버지 배기환</div>
             <div class="number-row">기업은행 010-2735-9812</div>
             <div class="account-modal-actions">
-              <button type="button" class="btn-modal-action copy btn-copy-account" data-account="기업은행 010-2735-9812 배기환">계좌번호 복사</button>
+              <button type="button" class="btn-modal-action copy btn-copy-account" data-account="01027359812">계좌번호 복사</button>
             </div>
           </div>
           <div class="account-modal-card">
             <div class="holder-row">어머니 이병애</div>
             <div class="number-row">기업은행 010-3894-3232</div>
             <div class="account-modal-actions">
-              <button type="button" class="btn-modal-action copy btn-copy-account" data-account="기업은행 010-3894-3232 이병애">계좌번호 복사</button>
+              <button type="button" class="btn-modal-action copy btn-copy-account" data-account="01038943232">계좌번호 복사</button>
             </div>
           </div>
           <div class="account-modal-card">
             <div class="holder-row">신랑 배정근</div>
             <div class="number-row">우리은행 1002-162-524423</div>
             <div class="account-modal-actions">
-              <button type="button" class="btn-modal-action copy btn-copy-account" data-account="우리은행 1002-162-524423 배정근">계좌번호 복사</button>
+              <button type="button" class="btn-modal-action copy btn-copy-account" data-account="1002162524423">계좌번호 복사</button>
               <a href="https://qr.kakaopay.com/FE3WIj5Sk" target="_blank" rel="noopener" class="btn-modal-action kakaopay"> 카카오페이 송금 </a>
             </div>
           </div>
@@ -803,21 +785,21 @@
             <div class="holder-row">아버지 한창희</div>
             <div class="number-row">우리은행 164-156368-02-008</div>
             <div class="account-modal-actions">
-              <button type="button" class="btn-modal-action copy btn-copy-account" data-account="우리은행 164-156368-02-008 한창희">계좌번호 복사</button>
+              <button type="button" class="btn-modal-action copy btn-copy-account" data-account="16415636802008">계좌번호 복사</button>
             </div>
           </div>
           <div class="account-modal-card">
             <div class="holder-row">어머니 이금이</div>
-            <div class="number-row">국민은행 714002-01-458084</div>
+            <div class="number-row">우리은행 1002-358-163550</div>
             <div class="account-modal-actions">
-              <button type="button" class="btn-modal-action copy btn-copy-account" data-account="국민은행 714002-01-458084 이금이">계좌번호 복사</button>
+              <button type="button" class="btn-modal-action copy btn-copy-account" data-account="1002358163550">계좌번호 복사</button>
             </div>
           </div>
           <div class="account-modal-card">
             <div class="holder-row">신부 한지수</div>
             <div class="number-row">우리은행 1002-764-181491</div>
             <div class="account-modal-actions">
-              <button type="button" class="btn-modal-action copy btn-copy-account" data-account="우리은행 1002-764-181491 한지수">계좌번호 복사</button>
+              <button type="button" class="btn-modal-action copy btn-copy-account" data-account="1002764181491">계좌번호 복사</button>
               <a href="https://qr.kakaopay.com/FSfwOClps" target="_blank" rel="noopener" class="btn-modal-action kakaopay"> 카카오페이 송금 </a>
             </div>
           </div>

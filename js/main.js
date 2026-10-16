@@ -853,18 +853,57 @@ document.addEventListener('DOMContentLoaded', () => {
   const rsvpForm = document.getElementById('rsvp-form');
   const rsvpSubmitBtn = document.getElementById('rsvp-submit-btn');
   const rsvpAttendRadios = document.querySelectorAll('input[name="rsvp_attend"]');
-  const rsvpCountWrap = document.getElementById('rsvp-count-wrap');
   const rsvpMealWrap = document.getElementById('rsvp-meal-wrap');
+  const rsvpCountMinus = document.getElementById('rsvp-count-minus');
+  const rsvpCountPlus = document.getElementById('rsvp-count-plus');
+  const rsvpCountValue = document.getElementById('rsvp-count-value');
+
+  // 동행 인원 스테퍼: 참석이면 1~RSVP_COUNT_MAX, 미참석이면 0 고정(버튼 비활성)
+  const RSVP_COUNT_MAX = 10;
+  let rsvpCount = 1;
+  let rsvpAttending = true;
+
+  const renderRsvpCount = () => {
+    if (rsvpCountValue) rsvpCountValue.textContent = String(rsvpCount);
+    if (rsvpCountMinus) rsvpCountMinus.disabled = !rsvpAttending || rsvpCount <= 1;
+    if (rsvpCountPlus) rsvpCountPlus.disabled = !rsvpAttending || rsvpCount >= RSVP_COUNT_MAX;
+  };
+
+  const applyRsvpAttend = (isAttending) => {
+    rsvpAttending = isAttending;
+    rsvpCount = isAttending ? 1 : 0;
+    if (rsvpMealWrap) rsvpMealWrap.style.display = isAttending ? 'block' : 'none';
+    renderRsvpCount();
+  };
+
+  if (rsvpCountMinus) {
+    rsvpCountMinus.addEventListener('click', () => {
+      if (!rsvpAttending || rsvpCount <= 1) return;
+      rsvpCount -= 1;
+      renderRsvpCount();
+    });
+  }
+  if (rsvpCountPlus) {
+    rsvpCountPlus.addEventListener('click', () => {
+      if (!rsvpAttending || rsvpCount >= RSVP_COUNT_MAX) return;
+      rsvpCount += 1;
+      renderRsvpCount();
+    });
+  }
 
   if (rsvpAttendRadios.length) {
     rsvpAttendRadios.forEach((radio) => {
       radio.addEventListener('change', (e) => {
-        const isAttending = e.target.value === '참석';
-        if (rsvpCountWrap) rsvpCountWrap.style.display = isAttending ? 'block' : 'none';
-        if (rsvpMealWrap) rsvpMealWrap.style.display = isAttending ? 'block' : 'none';
+        applyRsvpAttend(e.target.value === '참석');
       });
     });
   }
+
+  // form.reset()은 change 이벤트를 발생시키지 않으므로 초기 상태(참석, 1명)로 직접 되돌린다
+  const resetRsvpForm = () => {
+    rsvpForm.reset();
+    applyRsvpAttend(true);
+  };
 
   if (rsvpForm) {
     rsvpForm.addEventListener('submit', async (e) => {
@@ -880,22 +919,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const sideInput = document.querySelector('input[name="rsvp_side"]:checked');
       const attendInput = document.querySelector('input[name="rsvp_attend"]:checked');
-      const countInput = document.querySelector('input[name="rsvp_count"]:checked');
       const mealInput = document.querySelector('input[name="rsvp_meal"]:checked');
-      const messageInput = document.getElementById('rsvp-message');
 
       const side = sideInput ? sideInput.value : '신랑측';
       const attend = attendInput ? attendInput.value : '참석';
-      const count = attend === '참석' && countInput ? countInput.value : '0명';
+      // 인원은 시트에서 합계를 낼 수 있도록 숫자로 보낸다
+      const count = attend === '참석' ? rsvpCount : 0;
       const meal = attend === '참석' && mealInput ? mealInput.value : '식사 안함';
-      const message = messageInput ? messageInput.value.trim() : '';
-      const timestamp = new Date().toLocaleString('ko-KR');
+      // 하객 기기의 시간대와 무관하게 한국 시간으로 기록한다
+      const timestamp = new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' });
 
-      const payload = { timestamp, side, name, attend, count, meal, message };
+      const payload = { timestamp, side, name, attend, count, meal };
 
       // Demo Mode Guard
       if (isDemoPage) {
-        rsvpForm.reset();
+        resetRsvpForm();
         closeModal(rsvpModal);
         showToast(
           attend === '참석'
@@ -922,17 +960,17 @@ document.addEventListener('DOMContentLoaded', () => {
         localList.push(payload);
         localStorage.setItem('rsvp_list_ver2', JSON.stringify(localList));
 
-        rsvpForm.reset();
+        resetRsvpForm();
         closeModal(rsvpModal);
         showToast(
           attend === '참석'
-            ? `${name}님, 참석 의사가 전달되었습니다. 감사합니다!`
+            ? `${name}님, 참석 의사가 전달되었습니다💌🕊️\n감사합니다!`
             : `${name}님, 따뜻한 마음 전해주셔서 감사합니다!`
         );
       } catch (err) {
         console.error('RSVP error:', err);
         closeModal(rsvpModal);
-        showToast('참석 의사가 전달되었습니다. 감사합니다!');
+        showToast('참석 의사가 w전달되었습니다💌🕊️\n감사합니다!');
       } finally {
         if (rsvpSubmitBtn) {
           rsvpSubmitBtn.disabled = false;
