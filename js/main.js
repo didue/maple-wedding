@@ -2,7 +2,9 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   // 1. Toast Notification Utility
-  const showToast = (message) => {
+  // duration 을 0 으로 주면 다음 토스트가 뜰 때까지 유지된다 (등록 중 안내 등)
+  let toastTimer = null;
+  const showToast = (message, duration = 2800) => {
     let toast = document.querySelector('.toast-msg');
     if (!toast) {
       toast = document.createElement('div');
@@ -12,9 +14,12 @@ document.addEventListener('DOMContentLoaded', () => {
     toast.textContent = message;
     toast.classList.add('show');
 
-    setTimeout(() => {
-      toast.classList.remove('show');
-    }, 2800);
+    clearTimeout(toastTimer);
+    if (duration > 0) {
+      toastTimer = setTimeout(() => {
+        toast.classList.remove('show');
+      }, duration);
+    }
   };
 
   // Demo Page Environment Check (Never send data to real Drive/Sheets when data-demo="true")
@@ -975,6 +980,235 @@ document.addEventListener('DOMContentLoaded', () => {
         if (rsvpSubmitBtn) {
           rsvpSubmitBtn.disabled = false;
           rsvpSubmitBtn.textContent = '전달하기';
+        }
+      }
+    });
+  }
+
+  // 9-1. GuestBook List (Code.gs: GET ?action=guestbook_list → 등록시각 최신순 entries)
+  const guestbookList = document.getElementById('guestbook-list');
+
+  const formatGuestbookTime = (iso) => {
+    const date = new Date(iso);
+    if (!iso || Number.isNaN(date.getTime())) return '';
+    const parts = new Intl.DateTimeFormat('ko-KR', {
+      timeZone: 'Asia/Seoul',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+    }).formatToParts(date);
+    const get = (type) => (parts.find((p) => p.type === type) || {}).value || '';
+    return `${get('year')}.${get('month')}.${get('day')} ${get('hour')}:${get('minute')}`;
+  };
+
+  // 방명록이 5개를 넘으면 5번째 카드까지 보이는 높이로 고정하고 리스트 안에서 스크롤한다
+  const GUESTBOOK_VISIBLE_MAX = 5;
+  const GUESTBOOK_PEEK_PX = 28; // 6번째 카드를 살짝 보여줘서 스크롤할 수 있다는 걸 알린다
+  const updateGuestbookScroll = () => {
+    if (!guestbookList) return;
+    const cards = guestbookList.querySelectorAll('.guestbook-card');
+    guestbookList.style.removeProperty('--guestbook-list-max-height');
+    if (cards.length <= GUESTBOOK_VISIBLE_MAX) {
+      guestbookList.classList.remove('is-scrollable');
+      return;
+    }
+    guestbookList.classList.add('is-scrollable');
+    const listTop = guestbookList.getBoundingClientRect().top - guestbookList.scrollTop;
+    const lastVisibleBottom = cards[GUESTBOOK_VISIBLE_MAX - 1].getBoundingClientRect().bottom;
+    const maxHeight = Math.ceil(lastVisibleBottom - listTop + GUESTBOOK_PEEK_PX);
+    guestbookList.style.setProperty('--guestbook-list-max-height', `${maxHeight}px`);
+  };
+
+  let guestbookResizeFrame = null;
+  window.addEventListener('resize', () => {
+    cancelAnimationFrame(guestbookResizeFrame);
+    guestbookResizeFrame = requestAnimationFrame(updateGuestbookScroll);
+  });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(updateGuestbookScroll);
+
+  const renderGuestbookStatus = (text) => {
+    const status = document.createElement('p');
+    status.className = 'guestbook-status';
+    status.textContent = text;
+    guestbookList.replaceChildren(status);
+    updateGuestbookScroll();
+  };
+
+  // 하객이 입력한 값이므로 innerHTML 대신 textContent 로만 넣는다
+  const renderGuestbookEntries = (entries) => {
+    if (!entries.length) {
+      renderGuestbookStatus('첫 번째 축하 메시지를 남겨주세요 🤍');
+      return;
+    }
+    const cards = entries.map((entry) => {
+      const card = document.createElement('article');
+      card.className = 'ludi-notice-card guestbook-card';
+
+      const header = document.createElement('div');
+      header.className = 'guestbook-card-header';
+
+      const name = document.createElement('span');
+      name.className = 'guestbook-card-name';
+      name.textContent = entry.name;
+
+      const time = document.createElement('time');
+      time.className = 'guestbook-card-time';
+      time.dateTime = entry.timestamp || '';
+      time.textContent = formatGuestbookTime(entry.timestamp);
+
+      const message = document.createElement('p');
+      message.className = 'guestbook-card-message';
+      message.textContent = entry.message;
+
+      header.append(name, time);
+      card.append(header, message);
+      return card;
+    });
+    guestbookList.replaceChildren(...cards);
+    guestbookList.scrollTop = 0;
+    updateGuestbookScroll();
+  };
+
+  const loadGuestbook = async () => {
+    if (!guestbookList) return;
+
+    // 데모 페이지에서는 실제 하객 메시지를 불러오지 않는다
+    if (isDemoPage) {
+      renderGuestbookEntries([]);
+      return;
+    }
+
+    try {
+      const res = await fetch(`${GAS_ENDPOINT_URL}?action=guestbook_list`);
+      const data = await res.json();
+      if (!data.ok) throw new Error(data.error || 'guestbook_list failed');
+      const entries = data.result && Array.isArray(data.result.entries) ? data.result.entries : [];
+      renderGuestbookEntries(entries);
+    } catch (err) {
+      console.error('Guestbook load error:', err);
+      renderGuestbookStatus('방명록을 불러오지 못했어요. 잠시 후 다시 확인해 주세요.');
+    }
+  };
+
+  loadGuestbook();
+
+  // 9-2. GuestBook Write (Code.gs: POST { action: 'guestbook_add', id, timestamp(ISO), name, contact, message })
+  const guestbookModal = document.getElementById('guestbook-modal');
+  const btnOpenGuestbook = document.getElementById('btn-open-guestbook');
+  const guestbookModalClose = document.getElementById('guestbook-modal-close');
+  const guestbookForm = document.getElementById('guestbook-form');
+  const guestbookSubmitBtn = document.getElementById('guestbook-submit-btn');
+  const guestbookNameInput = document.getElementById('guestbook-name');
+  const guestbookContactInput = document.getElementById('guestbook-contact');
+  const guestbookMessageInput = document.getElementById('guestbook-message');
+  const guestbookCharCount = document.getElementById('guestbook-char-count');
+  const GUESTBOOK_MESSAGE_MAX = 500;
+
+  const updateGuestbookCharCount = () => {
+    if (!guestbookCharCount || !guestbookMessageInput) return;
+    guestbookCharCount.textContent = `${guestbookMessageInput.value.length} / ${GUESTBOOK_MESSAGE_MAX}`;
+  };
+  if (guestbookMessageInput) guestbookMessageInput.addEventListener('input', updateGuestbookCharCount);
+
+  const createGuestbookId = () =>
+    window.crypto && typeof window.crypto.randomUUID === 'function'
+      ? window.crypto.randomUUID()
+      : `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
+
+  if (btnOpenGuestbook) {
+    btnOpenGuestbook.addEventListener('click', () => {
+      playOpenSound();
+      openModal(guestbookModal);
+      if (guestbookNameInput) guestbookNameInput.focus();
+    });
+  }
+  if (guestbookModalClose) guestbookModalClose.addEventListener('click', () => closeModal(guestbookModal));
+
+  // 연락처 뒷자리는 숫자만 입력되게 한다 (시트에는 '0123'처럼 앞자리 0까지 텍스트로 저장됨)
+  if (guestbookContactInput) {
+    guestbookContactInput.addEventListener('input', () => {
+      guestbookContactInput.value = guestbookContactInput.value.replace(/[^0-9]/g, '').slice(0, 4);
+    });
+  }
+
+  if (guestbookForm) {
+    guestbookForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const name = guestbookNameInput ? guestbookNameInput.value.trim() : '';
+      const contact = guestbookContactInput ? guestbookContactInput.value.trim() : '';
+      const message = guestbookMessageInput ? guestbookMessageInput.value.trim() : '';
+
+      if (!name) {
+        showToast('이름을 입력해주세요.');
+        if (guestbookNameInput) guestbookNameInput.focus();
+        return;
+      }
+      if (!/^[0-9]{4}$/.test(contact)) {
+        showToast('연락처 뒷자리 4자리를 숫자로 입력해 주세요.');
+        if (guestbookContactInput) guestbookContactInput.focus();
+        return;
+      }
+      if (!message) {
+        showToast('축하 메세지를 입력해 주세요.');
+        if (guestbookMessageInput) guestbookMessageInput.focus();
+        return;
+      }
+      if (message.length > GUESTBOOK_MESSAGE_MAX) {
+        showToast(`축하 메세지는 최대 ${GUESTBOOK_MESSAGE_MAX}자까지 입력할 수 있어요.`);
+        if (guestbookMessageInput) guestbookMessageInput.focus();
+        return;
+      }
+
+      // Demo Mode Guard
+      if (isDemoPage) {
+        guestbookForm.reset();
+        updateGuestbookCharCount();
+        closeModal(guestbookModal);
+        showToast('[데모] 메세지가 등록되었어💌');
+        return;
+      }
+
+      const payload = {
+        action: 'guestbook_add',
+        id: createGuestbookId(),
+        timestamp: new Date().toISOString(),
+        name,
+        contact,
+        message,
+      };
+
+      if (guestbookSubmitBtn) {
+        guestbookSubmitBtn.disabled = true;
+        guestbookSubmitBtn.textContent = '저장 중...';
+      }
+      showToast('축하 메세지를 등록하고 있어요🕊️', 0);
+
+      try {
+        // text/plain 으로 보내면 CORS preflight 없이 GAS 응답(ok/error)을 읽을 수 있다
+        const res = await fetch(GAS_ENDPOINT_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(payload),
+        });
+        const data = await res.json();
+        if (!data.ok) throw new Error(data.error || 'guestbook_add failed');
+
+        guestbookForm.reset();
+        updateGuestbookCharCount();
+        closeModal(guestbookModal);
+        showToast('메세지가 등록되었어💌');
+        loadGuestbook();
+      } catch (err) {
+        console.error('Guestbook add error:', err);
+        showToast('메시지 등록에 실패했습니다. 잠시 후 다시 시도해 주세요.');
+      } finally {
+        if (guestbookSubmitBtn) {
+          guestbookSubmitBtn.disabled = false;
+          guestbookSubmitBtn.textContent = '저장하기';
         }
       }
     });
