@@ -1168,7 +1168,7 @@ document.addEventListener('DOMContentLoaded', () => {
         guestbookForm.reset();
         updateGuestbookCharCount();
         closeModal(guestbookModal);
-        showToast('[데모] 메세지가 등록되었어💌');
+        showToast('[데모] 따뜻한 마음이 잘 전달되었어요💌');
         return;
       }
 
@@ -1200,7 +1200,7 @@ document.addEventListener('DOMContentLoaded', () => {
         guestbookForm.reset();
         updateGuestbookCharCount();
         closeModal(guestbookModal);
-        showToast('메세지가 등록되었어💌');
+        showToast('따뜻한 마음이 잘 전달되었어요💌');
         loadGuestbook();
       } catch (err) {
         console.error('Guestbook add error:', err);
